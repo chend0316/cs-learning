@@ -1,0 +1,6 @@
+Vagrant.configure(2) do |config|
+  config.vm.provider "virtualbox" do |virtualbox|
+    virtualbox.name = "ansible-1st-edition-ch01"
+  end
+  config.vm.box = "ubuntu/trusty64"
+end

@@ -28,6 +28,19 @@ T_tree insert(String key, T_tree t) {
   return t;
 }
 
+// 函数式
+T_tree insert2(String key, T_tree t) {
+  if (t == NULL) {
+    return Tree(NULL, key, NULL);
+  } else if (strcmp(key, t->key) < 0) {
+    return Tree(insert(key, t->left), key, t->right);
+  } else if (strcmp(key, t->key) > 0) {
+    return Tree(t->left, key, insert(key, t->right));
+  } else {
+    return Tree(t->left, key, t->right);
+  }
+}
+
 bool member(String key, T_tree t) {
   if (t == NULL) return false;
   if (strcmp(key, t->key) < 0) {

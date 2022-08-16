@@ -1,0 +1,44 @@
+$server_bootstrap = <<-SCRIPT
+apt update
+
+# shadowsocks
+apt-get install -y python3-pip
+pip3 install shadowsocks
+
+# nginx
+apt-get install -y gdb gcc make 
+sudo apt-get install -y libpcre3 libpcre3-dev zlib1g-dev libssl-dev
+SCRIPT
+
+$client_bootstrap = <<-SCRIPT
+apt update
+apt-get install -y python3-pip
+pip3 install shadowsocks
+SCRIPT
+ 
+Vagrant.configure("2") do |config|
+
+    config.vm.define "proxy-server" do |server|
+        server.vm.box = "ubuntu/xenial64"
+        server.vm.box_url = "file:///Users/chendong/Downloads/vagrant-boxes/xenial-server-cloudimg-amd64-vagrant.box"
+
+        server.vm.provision "shell", inline: $server_bootstrap
+        server.vm.provision "shell", path: "nginx-setup.sh", privileged: false
+
+        server.vm.network "private_network", ip: "192.168.56.1"
+        server.vm.network "forwarded_port", guest: 8381, host: 8381
+
+        server.vm.post_up_message = "成功，请继续"
+    end
+
+    config.vm.define "proxy-client" do |client|
+        client.vm.box = "ubuntu/xenial64"
+        client.vm.box_url = "file:///Users/chendong/Downloads/vagrant-boxes/xenial-server-cloudimg-amd64-vagrant.box"
+      
+        client.vm.provision "shell", inline: $client_bootstrap
+      
+        # Ranges: 192.168.56.0/21
+        # 192.168.56~63.0~255
+        client.vm.network "private_network", ip: "192.168.56.4"
+    end
+end
