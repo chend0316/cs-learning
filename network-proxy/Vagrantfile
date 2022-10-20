@@ -18,7 +18,7 @@ SCRIPT
  
 Vagrant.configure("2") do |config|
 
-    config.vm.define "proxy-server" do |server|
+    config.vm.define "server" do |server|
         server.vm.box = "ubuntu/xenial64"
         server.vm.box_url = "file:///Users/chendong/Downloads/vagrant-boxes/xenial-server-cloudimg-amd64-vagrant.box"
 
@@ -26,12 +26,14 @@ Vagrant.configure("2") do |config|
         server.vm.provision "shell", path: "nginx-setup.sh", privileged: false
 
         # server.vm.network "private_network", ip: "192.168.56.1"
-        server.vm.network "forwarded_port", guest: 8381, host: 8381
+        server.vm.network "forwarded_port", guest: 8888, host: 8888
+        server.vm.network "forwarded_port", guest: 9999, host: 9999, protocol: 'udp'
+        server.vm.network "forwarded_port", guest: 8899, host: 8899
 
         server.vm.post_up_message = "成功，请继续"
     end
 
-    config.vm.define "proxy-client" do |client|
+    config.vm.define "client" do |client|
         client.vm.box = "ubuntu/xenial64"
         client.vm.box_url = "file:///Users/chendong/Downloads/vagrant-boxes/xenial-server-cloudimg-amd64-vagrant.box"
       
