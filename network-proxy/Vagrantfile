@@ -25,7 +25,7 @@ Vagrant.configure("2") do |config|
         server.vm.provision "shell", inline: $server_bootstrap
         server.vm.provision "shell", path: "nginx-setup.sh", privileged: false
 
-        server.vm.network "private_network", ip: "192.168.56.1"
+        # server.vm.network "private_network", ip: "192.168.56.1"
         server.vm.network "forwarded_port", guest: 8381, host: 8381
 
         server.vm.post_up_message = "成功，请继续"
@@ -39,6 +39,6 @@ Vagrant.configure("2") do |config|
       
         # Ranges: 192.168.56.0/21
         # 192.168.56~63.0~255
-        client.vm.network "private_network", ip: "192.168.56.4"
+        # client.vm.network "private_network", ip: "192.168.56.4"
     end
 end
