@@ -1,0 +1,78 @@
+{
+  "nested": {
+    "RecordVolumeModifyVal": {
+      "fields": {
+        "setVolume": {
+          "rule": "required",
+          "type": "uint32",
+          "id": 1
+        },
+        "isInMeeting": {
+          "type": "bool",
+          "id": 2,
+          "options": {
+            "default": false
+          }
+        },
+        "setPrimitiveVolume": {
+          "type": "uint32",
+          "id": 3
+        },
+        "isInSettingPage": {
+          "type": "bool",
+          "id": 4
+        }
+      }
+    },
+    "PlaybackVolumeModifyVal": {
+      "fields": {
+        "setVolume": {
+          "rule": "required",
+          "type": "uint32",
+          "id": 1
+        },
+        "isInMeeting": {
+          "type": "bool",
+          "id": 2,
+          "options": {
+            "default": false
+          }
+        },
+        "setPrimitiveVolume": {
+          "type": "uint32",
+          "id": 3
+        },
+        "isInSettingPage": {
+          "type": "bool",
+          "id": 4
+        }
+      }
+    },
+    "RecordVolumeVal": {
+      "fields": {
+        "volume": {
+          "rule": "required",
+          "type": "uint32",
+          "id": 1
+        },
+        "primitiveVolume": {
+          "type": "uint32",
+          "id": 2
+        }
+      }
+    },
+    "PlaybackVolumeVal": {
+      "fields": {
+        "volume": {
+          "rule": "required",
+          "type": "uint32",
+          "id": 1
+        },
+        "primitiveVolume": {
+          "type": "uint32",
+          "id": 2
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,42 @@
+$server_bootstrap = <<-SCRIPT
+apt update
+
+# nginx
+apt-get install -y gdb gcc make 
+sudo apt-get install -y libpcre3 libpcre3-dev zlib1g-dev libssl-dev
+SCRIPT
+
+$nginx_setup = <<-SCRIPT
+wget http://nginx.org/download/nginx-1.22.0.tar.gz
+tar -xzf nginx-1.22.0.tar.gz
+cd nginx-1.22.0
+./configure --prefix=/home/vagrant/nginx \
+  --with-http_ssl_module
+make
+make install
+echo 'export PATH="$PATH:/home/vagrant/nginx/sbin"' >> /home/vagrant/.bashrc
+SCRIPT
+
+Vagrant.configure("2") do |config|
+
+    config.vm.define "server" do |server|
+        server.vm.box = "ubuntu/xenial64"
+        server.vm.box_url = "file:///Users/chendong/Downloads/vagrant-boxes/xenial-server-cloudimg-amd64-vagrant.box"
+
+        server.vm.provision "shell", inline: $server_bootstrap
+        server.vm.provision "shell", inline: $nginx_setup, privileged: false
+
+        server.vm.network "forwarded_port", guest: 80, host: 8080
+    end
+
+    # config.vm.define "client" do |client|
+    #     client.vm.box = "ubuntu/xenial64"
+    #     client.vm.box_url = "file:///Users/chendong/Downloads/vagrant-boxes/xenial-server-cloudimg-amd64-vagrant.box"
+      
+    #     client.vm.provision "shell", inline: $client_bootstrap
+      
+    #     # Ranges: 192.168.56.0/21
+    #     # 192.168.56~63.0~255
+    #     # client.vm.network "private_network", ip: "192.168.56.4"
+    # end
+end

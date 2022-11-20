@@ -1,0 +1,33 @@
+syntax = "proto2";
+
+// action: trigger
+// RECORD_VOLUME_MODIFY 1
+message RecordVolumeModifyVal {
+  required uint32 set_volume = 1;
+  optional bool is_in_meeting = 2 [default = false]; // 是否是会中设置音量
+  optional uint32 set_primitive_volume = 3; // 0~255音量值
+  optional bool is_in_setting_page = 4; // 是否是设置页设置音量
+}
+
+// action: trigger
+// PLAYBACK_VOLUME_MODIFY 2
+message PlaybackVolumeModifyVal {
+  required uint32 set_volume = 1;
+  optional bool is_in_meeting = 2 [default = false]; // 是否是会中设置音量
+  optional uint32 set_primitive_volume = 3; // 0~255音量值
+  optional bool is_in_setting_page = 4; // 是否是设置页设置音量
+}
+
+// action: set,get,request
+// RECORD_VOLUME = 3
+message RecordVolumeVal {
+  required uint32 volume = 1;
+  optional uint32 primitive_volume = 2;
+}
+
+// action: set,get,request
+// PLAYBACK_VOLUME = 4
+message PlaybackVolumeVal {
+  required uint32 volume = 1;
+  optional uint32 primitive_volume = 2;
+}
